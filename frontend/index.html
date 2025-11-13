@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Corporate Assets Tracker</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1><i class="fa-solid fa-laptop"></i> Corporate Assets Tracker</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="./pages/chat.html">Chat</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="assets-header">
+        <h2>All Corporate Assets</h2>
+        <button class="btn" id="addAssetBtn">
+          <i class="fa-solid fa-plus"></i> Add Asset
+        </button>
+      </div>
+
+      <section id="assetList" class="asset-list">
+        <p>Loading assets...</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Corporate Assets Tracker. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="assetModal" class="modal">
+      <div class="modal-content">
+        <h3 id="modalTitle">Add New Asset</h3>
+        <form id="assetForm">
+          <div class="form-group">
+            <label for="asset_type">Asset Type</label>
+            <input type="text" id="asset_type" name="asset_type" required />
+          </div>
+
+          <div class="form-group">
+            <label for="brand">Brand</label>
+            <input type="text" id="brand" name="brand" required />
+          </div>
+
+          <div class="form-group">
+            <label for="model_number">Model Number</label>
+            <input type="text" id="model_number" name="model_number" required />
+          </div>
+
+          <div class="form-group">
+            <label for="assigned_to">Assigned To</label>
+            <input type="text" id="assigned_to" name="assigned_to" required />
+          </div>
+
+          <div class="form-group">
+            <label for="purchase_date">Purchase Date</label>
+            <input type="date" id="purchase_date" name="purchase_date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="Active">Active</option>
+              <option value="Returned">Returned</option>
+              <option value="In Repair">In Repair</option>
+              <option value="Disposed">Disposed</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Save</button>
+          <button type="button" class="btn" id="closeModalBtn">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+    <script type="module" src="./services/apiService.js"></script>
+  </body>
+</html>

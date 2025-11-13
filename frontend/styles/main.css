@@ -1,0 +1,274 @@
+/* ===============================
+   CSS VARIABLES
+==================================*/
+:root {
+    --color-text: #2f2f2f;
+    --color-text-strong: #111;
+    --color-bg: #f9fafb;
+    --color-surface: #ffffff;
+    --color-accent: #6fcf97;
+    --color-muted: #7a8a98;
+    --color-border: #e1e4e8;
+    --color-border-light: #f0f0f0;
+    --color-primary: #2b6cb0;
+    --color-primary-soft: #265a91;
+    --color-success: #28a745;
+    --color-muted-2: #f5f6f7;
+    --color-assistant-bg: #eef1f3;
+    --color-white: #fff;
+    --color-heading: #333;
+    --shadow-1: 0 2px 6px rgba(0, 0, 0, 0.06);
+    --color-muted-dark: #555;
+  }
+  
+  /* ===============================
+     GLOBAL STYLES
+  ==================================*/
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+scrollbar-width: thin;
+scrollbar-color: var(--color-primary) var(--color-muted-2);
+}
+
+::-webkit-scrollbar {
+width: 10px;
+height: 10px;
+}
+::-webkit-scrollbar-track {
+background: var(--color-muted-2);
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+background-color: var(--color-primary);
+border-radius: 10px;
+border: 2px solid var(--color-border);
+transition: background-color 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+background-color: var(--color-primary-soft);
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: "Segoe UI", Arial, sans-serif;
+line-height: 1.6;
+color: var(--color-text);
+background-color: var(--color-bg);
+height: 100vh;
+overflow: auto;
+}
+
+/* ===============================
+    HEADER
+==================================*/
+header {
+background: linear-gradient(
+    -135deg,
+    var(--color-primary),
+    var(--color-primary-soft)
+);
+padding: 1rem 2rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+color: var(--color-white);
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 1.5rem;
+}
+
+nav ul {
+list-style: none;
+display: flex;
+}
+
+nav ul li {
+display: inline-block;
+margin: 0 1rem;
+border-radius: 1.5rem;
+}
+
+nav ul li a {
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+padding: 0.5rem 0.875rem;
+color: var(--color-white);
+transition: all 0.3s ease;
+}
+
+nav ul li:hover {
+background-color: var(--color-primary-soft);
+color: var(--color-white);
+}
+
+/* ===============================
+    MAIN CONTENT
+==================================*/
+main {
+padding: 2rem;
+max-width: 950px;
+margin: 0 auto;
+min-height: calc(100vh - 140px);
+}
+
+/* Header above cards */
+.assets-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1.5rem;
+}
+
+.assets-header h2 {
+color: var(--color-heading);
+font-size: 1.3rem;
+}
+
+/* ===============================
+    BUTTONS
+==================================*/
+.btn {
+background-color: var(--color-primary);
+color: var(--color-white);
+padding: 0.6rem 1.2rem;
+border: none;
+border-radius: 0.5rem;
+cursor: pointer;
+font-size: 0.9rem;
+transition: all 0.3s ease;
+}
+
+.btn:hover {
+background-color: var(--color-primary-soft);
+}
+
+/* ===============================
+    ASSET CARDS
+==================================*/
+.asset-list {
+display: grid;
+gap: 1rem;
+}
+
+.asset-card {
+background-color: var(--color-surface);
+border: 1px solid var(--color-border);
+padding: 1rem 1.25rem;
+border-radius: 0.5rem;
+box-shadow: var(--shadow-1);
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+transition: transform 0.2s ease;
+}
+
+.asset-card:hover {
+transform: translateY(-3px);
+}
+
+.asset-info h3 {
+color: var(--color-primary-soft);
+margin-bottom: 0.4rem;
+font-size: 1.1rem;
+}
+
+.asset-info p {
+font-size: 0.9rem;
+margin-bottom: 0.2rem;
+color: var(--color-muted-dark);
+}
+
+/* ===============================
+    CARD ACTIONS
+==================================*/
+.asset-actions {
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+}
+
+.asset-actions button {
+border: none;
+background: none;
+cursor: pointer;
+color: var(--color-primary);
+font-size: 1.1rem;
+transition: color 0.2s ease;
+}
+
+.asset-actions button:hover {
+color: var(--color-primary-soft);
+}
+
+/* ===============================
+    MODAL FORM
+==================================*/
+.modal {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.45);
+justify-content: center;
+align-items: center;
+z-index: 100;
+}
+
+.modal-content {
+background: var(--color-white);
+padding: 2rem;
+border-radius: 0.5rem;
+width: 90%;
+max-width: 420px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h3 {
+margin-bottom: 1rem;
+color: var(--color-primary-soft);
+}
+
+.form-group {
+margin-bottom: 1rem;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 0.4rem;
+font-weight: 500;
+color: var(--color-text-strong);
+}
+
+.form-group input {
+width: 100%;
+padding: 0.55rem;
+border: 1px solid var(--color-border);
+border-radius: 0.3rem;
+font-size: 0.9rem;
+}
+
+/* ===============================
+    FOOTER
+==================================*/
+footer {
+background-color: var(--color-text);
+color: var(--color-white);
+text-align: center;
+padding: 1rem;
+width: 100%;
+position: relative;
+bottom: 0;
+font-size: 0.85rem;
+}
+  

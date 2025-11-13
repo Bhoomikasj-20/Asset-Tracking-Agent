@@ -1,6 +1,25 @@
 ## 📘 Project Overview
-Asset Tracking Agent
 
+# 🧠 AssetsTracking Agent  
+### A Conversational AgenticAI App for Smart Corporate Asset Management  
+---
+## 📘 Overview  
+
+**AssetsTracking Agent** is a web-based **Agentic AI application** designed to manage and track corporate assets such as laptops, mobile phones, and other hardware equipment.  
+This project aims to **simplify audit compliance** and **speed up clearance processes** through an AI-driven conversational interface.  
+
+With this system, corporate users can **interact naturally with an AI agent** to perform asset-related tasks like assigning, returning, and auditing devices — eliminating tedious manual tracking.
+
+---
+
+## 🎯 Objectives  
+
+- Automate asset management and clearance operations.  
+- Enable conversational interaction between corporate employees and AI.  
+- Reduce manual effort in tracking and auditing hardware.  
+- Ensure compliance and transparency during corporate audits.  
+
+---
 Follow the steps below to set up and run the backend application.
 
 ## 🚀 Steps to Start the Backend App

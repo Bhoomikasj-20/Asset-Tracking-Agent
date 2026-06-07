@@ -1,75 +1,180 @@
-## 📘 Project Overview
+# 🧠 AssetsTracking Agent
 
-# 🧠 AssetsTracking Agent  
-### A Conversational AgenticAI App for Smart Corporate Asset Management  
----
-## 📘 Overview  
+### AI-Powered Conversational Corporate Asset Management System
 
-**AssetsTracking Agent** is a web-based **Agentic AI application** designed to manage and track corporate assets such as laptops, mobile phones, and other hardware equipment.  
-This project aims to **simplify audit compliance** and **speed up clearance processes** through an AI-driven conversational interface.  
-
-With this system, corporate users can **interact naturally with an AI agent** to perform asset-related tasks like assigning, returning, and auditing devices — eliminating tedious manual tracking.
+![Enterprise](https://img.shields.io/badge/Enterprise-Ready-blue)
+![AI](https://img.shields.io/badge/AI-Gemini%202.0-purple)
+![Status](https://img.shields.io/badge/Status-Production-green)
 
 ---
 
-## 🎯 Objectives  
+## 📘 Overview
 
-- Automate asset management and clearance operations.  
-- Enable conversational interaction between corporate employees and AI.  
-- Reduce manual effort in tracking and auditing hardware.  
-- Ensure compliance and transparency during corporate audits.  
+**AssetsTracking Agent** is a modern **Agentic AI platform** for corporate asset management. It combines an intelligent conversational AI agent powered by Google Gemini with a comprehensive enterprise dashboard for tracking, auditing, and managing corporate hardware assets.
+
+### Key Features
+
+- 🤖 **AI-Powered Chat Agent** — Natural language asset management with tool-calling capabilities
+- 📊 **Enterprise Dashboard** — Real-time analytics with animated statistics and status tracking
+- 📦 **Full Asset Lifecycle** — CRUD operations + Assign → Return → Audit → Clear workflow
+- 🔍 **Smart Search & Filter** — Search by name, type, brand, employee, category, or status
+- 📋 **Audit Trail** — Complete logging of every action for compliance
+- 🎨 **Premium UI** — Glassmorphism, Framer Motion animations, dark mode
+- 📱 **Responsive Design** — Works on desktop, tablet, and mobile
 
 ---
-Follow the steps below to set up and run the backend application.
 
-## 🚀 Steps to Start the Backend App
+## 🚀 Quick Start
 
-1. **Navigate to the backend directory**  
-   ```bash
-   cd /workspace/assets_tracking_agent/backend
-   ```
+### Prerequisites
 
-2. **Install the required dependencies**  
-   Before running the application, install all necessary Python packages using:  
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **Python 3.10+** with pip
+- **Node.js 18+** with npm
+- **Google AI Studio API Key** — Get one at [aistudio.google.com](https://aistudio.google.com/)
 
-3. **Create Google AI Studio Key**
+### 1. Clone & Setup Backend
 
-   Visit https://aistudio.google.com/ using your personal gmail id and create an API Key. If you are a first time user you might have to create a new project in https://console.cloud.google.com/ first , import it here and then create API Key.
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
-4. **Update env with Google AI Studio Key**
+### 2. Configure API Key
 
-   Once the key is created copy the key value and update the below variable in .env file
+```bash
+# Copy the example env file
+cp .env.example .env
 
-   GOOGLE_API_KEY=<Use your key>
+# Edit .env and add your Google AI Studio API key
+# GOOGLE_API_KEY=your_actual_key_here
+```
 
-5. **Run the backend server**  
-   Once the dependencies are installed, start the application with:  
-   ```bash
-   python main.py
-   ```
+### 3. Start Backend Server
 
-## 🚀 Steps to Start the Frontend App
+```bash
+cd backend
+python main.py
+```
 
-1. Find the `index.html` file inside the **frontend** directory.
+Backend runs at: `http://localhost:8080`
 
-2. **Configure the backend connection**  
-   - Ensure that the **backend server** is up and running.  
-   - Open the `apiService.js` file (usually located inside the `js` or `services` folder).  
-   - Update the **host URL** or **API base URL** to match your backend’s running address.  
-     Example:  
-     ```js
-     const API_CONFIG = {
-         baseURL: "<BACKEND_URL>", // Configure the relevant backend url
-         headers: {
-         "Content-Type": "application/json",
-         },
-      };
-     ```
+### 4. Setup Frontend
 
-3. **Start the frontend app**  
-   - Right-click on `index.html`.  
-   - Choose **"Open with Live Server"** (available in VS Code or similar editors).  
-   - The application will automatically open in your default web browser.
+```bash
+cd frontend
+npm install
+```
+
+### 5. Start Frontend Dev Server
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend runs at: `http://localhost:5173`
+
+---
+
+## 🏗️ Project Structure
+
+```
+Asset-Tracking-Agent/
+├── backend/
+│   ├── agent/
+│   │   ├── agent.py          # AI agent configuration with tools
+│   │   ├── prompt.py         # Agent system prompt
+│   │   └── tools.py          # Agent tool functions
+│   ├── core/
+│   │   ├── db.py             # Database instance
+│   │   └── sqlite_db.py      # SQLite database with migration
+│   ├── models/
+│   │   └── data_model.py     # Pydantic models
+│   ├── repos/
+│   │   └── assets_repo.py    # Data access layer
+│   ├── routers/
+│   │   └── assets.py         # REST API endpoints
+│   ├── services/
+│   │   └── assets_service.py # Business logic layer
+│   ├── .env                  # API key configuration
+│   ├── .env.example          # Template for env file
+│   ├── main.py               # FastAPI application entry
+│   └── requirements.txt      # Python dependencies
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── assets/       # Asset management views
+│   │   │   ├── audit/        # Audit log viewer
+│   │   │   ├── chat/         # AI chat interface
+│   │   │   ├── dashboard/    # Analytics dashboard
+│   │   │   ├── layout/       # Navbar, layout
+│   │   │   └── ui/           # Reusable UI components
+│   │   ├── pages/
+│   │   │   └── LandingPage.tsx
+│   │   ├── services/
+│   │   │   └── apiService.ts # API client
+│   │   ├── types/
+│   │   │   └── index.ts      # TypeScript types
+│   │   ├── App.tsx           # Root component
+│   │   ├── index.css         # Global styles
+│   │   └── main.tsx          # Entry point
+│   ├── legacy/               # Original HTML/JS frontend
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.ts
+│
+└── README.md
+```
+
+---
+
+## 🔧 Tech Stack
+
+| Layer    | Technology                                          |
+|----------|-----------------------------------------------------|
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS, Framer Motion |
+| Backend  | Python, FastAPI, Google ADK, SQLite                 |
+| AI       | Google Gemini 2.0 Flash                             |
+| Icons    | Lucide React                                        |
+
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint                    | Description              |
+|--------|-----------------------------|--------------------------|
+| GET    | `/assets/`                  | List all assets          |
+| GET    | `/assets/stats`             | Dashboard statistics     |
+| GET    | `/assets/search?q=`         | Search assets            |
+| GET    | `/assets/status/{status}`   | Filter by status         |
+| GET    | `/assets/employee/{name}`   | Filter by employee       |
+| GET    | `/assets/category/{cat}`    | Filter by category       |
+| GET    | `/assets/audit-logs`        | Get audit logs           |
+| GET    | `/assets/{id}`              | Get asset by ID          |
+| POST   | `/assets/`                  | Create asset             |
+| PUT    | `/assets/{id}`              | Update asset             |
+| PUT    | `/assets/{id}/assign`       | Assign to employee       |
+| PUT    | `/assets/{id}/return`       | Mark as returned         |
+| PUT    | `/assets/{id}/clearance`    | Mark as cleared          |
+| DELETE | `/assets/{id}`              | Delete asset             |
+
+---
+
+## 🤖 AI Agent Commands
+
+The AI agent understands natural language. Example commands:
+
+- `"Show all assets"` — Lists entire inventory
+- `"Assign laptop to Ravi"` — Assigns an asset to an employee
+- `"How many assets are assigned?"` — Returns count
+- `"Show pending returned assets"` — Filters by status
+- `"Generate audit summary"` — Provides dashboard insights
+- `"Search for Dell laptops"` — Smart search
+- `"Clear employee assets"` — Processes clearance workflow
+
+---
+
+## 📄 License
+
+© 2025 AssetsTracking Agent. All rights reserved.

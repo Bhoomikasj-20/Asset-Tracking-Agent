@@ -1,0 +1,38 @@
+# Environments
+.env
+.env.*
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+.next/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+
+# Databases and State
+*.db
+*.sqlite3
+backend/assets.db
+backend/sessions.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

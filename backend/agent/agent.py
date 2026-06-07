@@ -1,25 +1,26 @@
-from google.adk.agents import LlmAgent
 from agent.tools import *
 from agent.prompt import *
 
+# This file now only serves as a configuration/tool registry
+# The Gemini service handles the actual LLM logic
 
+Model = "gemini-2.5-flash"
 
+AGENT_DESCRIPTION = "AssetsTrackingAgent - an intelligent AI assistant that helps corporates and enterprises manage, track, assign, return, and audit corporate assets through natural conversation."
 
-
-Model = "gemini-2.0-flash"
-root_agent=LlmAgent(
-    name="Assets_tracking_agent",
-    model = Model,
-    description="AssetsTrackingAgent, corporates and enterprises can converse naturally with AI Agent to eliminate the tedious manual process of tracking inventory and reporting it for audit compliance.", 
-    instruction=ROOT_AGENT_PROMPT,
-    tools= [
-   get_assets,
-   create_asset,
-   delete_asset, 
-   get_asset_by_id,
-   update_asset,
-   
-
-   ]
-)
-
+ALL_TOOLS = [
+    get_assets,
+    create_asset,
+    delete_asset,
+    get_asset_by_id,
+    update_asset,
+    assign_asset,
+    return_asset,
+    mark_clearance,
+    search_assets,
+    get_assets_by_status,
+    get_assets_by_employee,
+    get_asset_count,
+    get_dashboard_stats,
+    get_audit_logs,
+]

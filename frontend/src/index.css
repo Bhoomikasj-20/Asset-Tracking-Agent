@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #030712;
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(51, 141, 255, 0.4);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(51, 141, 255, 0.7);
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply bg-white/10 border-white/20 shadow-lg shadow-brand-500/10;
+    transform: translateY(-2px);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-cyan-400 to-brand-300;
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+  }
+
+  .glow-border {
+    @apply border border-brand-500/30;
+    box-shadow: 0 0 15px rgba(51, 141, 255, 0.15), inset 0 0 15px rgba(51, 141, 255, 0.05);
+  }
+
+  .status-badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+  }
+
+  .status-available {
+    @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30;
+  }
+  .status-assigned, .status-active {
+    @apply bg-brand-500/20 text-brand-400 border border-brand-500/30;
+  }
+  .status-returned {
+    @apply bg-amber-500/20 text-amber-400 border border-amber-500/30;
+  }
+  .status-under-audit, .status-in-repair {
+    @apply bg-purple-500/20 text-purple-400 border border-purple-500/30;
+  }
+  .status-pending-clearance {
+    @apply bg-orange-500/20 text-orange-400 border border-orange-500/30;
+  }
+  .status-cleared, .status-disposed {
+    @apply bg-slate-500/20 text-slate-400 border border-slate-500/30;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-brand-600 to-brand-500 text-white px-6 py-2.5 rounded-xl font-semibold
+    transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/30 hover:from-brand-500 hover:to-brand-400
+    active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white/10 backdrop-blur-sm text-white px-6 py-2.5 rounded-xl font-semibold border border-white/20
+    transition-all duration-300 hover:bg-white/20 hover:border-white/30 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply text-slate-400 px-4 py-2 rounded-xl font-medium transition-all duration-200
+    hover:text-white hover:bg-white/10 active:scale-95;
+  }
+
+  .input-glass {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 text-white
+    placeholder-slate-500 focus:outline-none focus:border-brand-500/50 focus:ring-2 focus:ring-brand-500/20
+    transition-all duration-200;
+  }
+
+  .select-glass {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 text-white
+    focus:outline-none focus:border-brand-500/50 focus:ring-2 focus:ring-brand-500/20
+    transition-all duration-200 appearance-none cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(51, 141, 255, 0.5), 0 0 40px rgba(51, 141, 255, 0.3);
+  }
+
+  .animate-in {
+    animation: slide-up 0.5s ease-out both;
+  }
+}
+
+/* Custom animation for skeleton loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+/* Markdown styles for chat */
+.chat-markdown h1, .chat-markdown h2, .chat-markdown h3 {
+  @apply font-bold mt-3 mb-2;
+}
+.chat-markdown h1 { @apply text-lg; }
+.chat-markdown h2 { @apply text-base; }
+.chat-markdown h3 { @apply text-sm; }
+.chat-markdown p { @apply mb-2 leading-relaxed; }
+.chat-markdown ul, .chat-markdown ol { @apply ml-5 mb-2 space-y-1; }
+.chat-markdown ul { @apply list-disc; }
+.chat-markdown ol { @apply list-decimal; }
+.chat-markdown li { @apply text-sm; }
+.chat-markdown strong { @apply font-bold text-white; }
+.chat-markdown code {
+  @apply bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono text-brand-300;
+}
+.chat-markdown pre {
+  @apply bg-black/30 p-3 rounded-lg overflow-x-auto my-2;
+}
+.chat-markdown pre code {
+  @apply bg-transparent px-0 py-0;
+}
+.chat-markdown table {
+  @apply w-full border-collapse my-2;
+}
+.chat-markdown th, .chat-markdown td {
+  @apply border border-white/10 px-3 py-2 text-sm text-left;
+}
+.chat-markdown th {
+  @apply bg-white/5 font-semibold;
+}
+.chat-markdown blockquote {
+  @apply border-l-4 border-brand-500/50 pl-4 my-2 text-slate-400 italic;
+}

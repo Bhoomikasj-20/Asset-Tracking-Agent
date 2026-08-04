@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || '';
+const rawApiUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+export const API_BASE = rawApiUrl;
 
 async function handleResponse(response: Response) {
   if (!response.ok) {
@@ -10,8 +11,9 @@ async function handleResponse(response: Response) {
 
 const api = {
   async get<T = unknown>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
     const query = new URLSearchParams(params).toString();
-    const url = `${API_BASE}${endpoint}${query ? `?${query}` : ''}`;
+    const url = `${API_BASE}${cleanEndpoint}${query ? `?${query}` : ''}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -20,7 +22,8 @@ const api = {
   },
 
   async post<T = unknown>(endpoint: string, data: unknown = {}): Promise<T> {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE}${cleanEndpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -29,7 +32,8 @@ const api = {
   },
 
   async put<T = unknown>(endpoint: string, data: unknown = {}): Promise<T> {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE}${cleanEndpoint}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -38,7 +42,8 @@ const api = {
   },
 
   async del<T = unknown>(endpoint: string): Promise<T> {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE}${cleanEndpoint}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -50,7 +55,8 @@ const api = {
     data: unknown,
     onChunk: (chunk: unknown) => void
   ): Promise<void> {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE}${cleanEndpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

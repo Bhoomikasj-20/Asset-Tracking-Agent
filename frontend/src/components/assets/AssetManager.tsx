@@ -40,7 +40,7 @@ export default function AssetManager({ addToast }: Props) {
   async function loadAssets() {
     setLoading(true);
     try {
-      const data = await api.get<Asset[]>('/assets/');
+      const data = await api.get<Asset[]>('/assets');
       setAssets(data);
     } catch {
       addToast('error', 'Failed to load assets');
@@ -105,7 +105,7 @@ export default function AssetManager({ addToast }: Props) {
         await api.put(`/assets/${editingId}`, form);
         addToast('success', 'Asset updated successfully');
       } else {
-        await api.post('/assets/', form);
+        await api.post('/assets', form);
         addToast('success', 'Asset created successfully');
       }
       setModalOpen(false);

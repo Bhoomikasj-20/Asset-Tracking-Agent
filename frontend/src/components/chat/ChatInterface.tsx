@@ -64,10 +64,10 @@ export default function ChatInterface({ addToast }: Props) {
           if (evt.content?.parts && Array.isArray(evt.content.parts)) {
             // Skip internal messages when loading history
             if ((evt.content as any).metadata?.internal) return;
-            
+
             const role = evt.content.role === 'user' ? 'user' :
               evt.content.parts.some(p => p.functionCall || p.functionResponse) ? 'function' : 'model';
-            
+
             // Further filter if role became function but we want it hidden
             if (role === 'function') return;
 
@@ -147,62 +147,10 @@ export default function ChatInterface({ addToast }: Props) {
     let gotResponse = false;
 
     try {
-      const apiBase = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${apiBase}/run_sse`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'text/event-stream, application/json',
-        },
-        body: JSON.stringify(payload),
+      await api.postStream('/run_sse', payload, (data: any) => {
+        gotResponse = true;
+        addResponseMessage(data);
       });
-
-      if (!response.ok) {
-        const errText = await response.text().catch(() => '');
-        throw new Error(`Server error ${response.status}: ${errText.slice(0, 200)}`);
-      }
-
-      if (!response.body) {
-        // Fallback: try reading as JSON
-        const json = await response.json();
-        if (json?.content?.parts) {
-          gotResponse = true;
-          addResponseMessage(json);
-        }
-      } else {
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) {
-            // Process remaining buffer
-            if (buffer.trim()) {
-              processSSELines(buffer, (data) => {
-                gotResponse = true;
-                addResponseMessage(data);
-              });
-            }
-            break;
-          }
-
-          buffer += decoder.decode(value, { stream: true });
-
-          // Process complete lines
-          let newlineIndex: number;
-          while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
-            const line = buffer.slice(0, newlineIndex).trim();
-            buffer = buffer.slice(newlineIndex + 1);
-            if (!line) continue;
-
-            processSSELines(line, (data) => {
-              gotResponse = true;
-              addResponseMessage(data);
-            });
-          }
-        }
-      }
 
       if (!gotResponse) {
         const noResponseMsg: DisplayMessage = {

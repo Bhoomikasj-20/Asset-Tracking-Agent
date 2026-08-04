@@ -32,12 +32,23 @@ from routers import assets
 app = FastAPI(title="AssetsTracking Agent API")
 
 # Configure allowed origins for CORS
-ALLOWED_ORIGINS = ["*"]
+ALLOWED_ORIGINS = [
+    "https://asset-tracking-agent.vercel.app",
+    "https://asset-tracking-agent-git-main-bhoomika-s-js-projects.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:8080",
+]
+if os.environ.get("CORS_ORIGINS"):
+    ALLOWED_ORIGINS.extend([origin.strip() for origin in os.environ["CORS_ORIGINS"].split(",") if origin.strip()])
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app|http://(localhost|127\.0\.0\.1)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -42,8 +42,18 @@ def get_audit_logs(asset_id: Optional[str] = None):
     return assets_service.get_audit_logs(asset_id)
 
 
+import os
+from fastapi.responses import FileResponse
+
 @router.get("/{asset_id}")
 def read_asset(asset_id: str):
+    if asset_id.endswith((".js", ".css", ".ico", ".png", ".svg", ".jpg", ".woff", ".woff2", ".map")):
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        dist_asset_path = os.path.join(base_dir, "frontend", "dist", "assets", asset_id)
+        if not os.path.isfile(dist_asset_path):
+            dist_asset_path = os.path.join(os.path.dirname(base_dir), "frontend", "dist", "assets", asset_id)
+        if os.path.isfile(dist_asset_path):
+            return FileResponse(dist_asset_path)
     return assets_service.get_asset_by_id(asset_id)
 
 

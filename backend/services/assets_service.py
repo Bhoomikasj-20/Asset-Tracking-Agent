@@ -226,3 +226,66 @@ def get_last_updated_asset():
         return {"message": "No assets found"}
     last_asset = max(assets, key=lambda x: x["last_updated_at"])
     return {"last_updated_asset": last_asset}
+
+
+def get_asset_summary():
+    return AssetRepo.get_summary()
+
+
+def get_asset_analytics():
+    return AssetRepo.get_analytics()
+
+
+def _sort_asset_list(assets: list, sort_by: str = "", sort_order: str = "asc") -> list:
+    if not sort_by or not assets:
+        return assets
+    key_map = {
+        "asset name": "asset_name",
+        "asset_name": "asset_name",
+        "name": "asset_name",
+        "category": "category",
+        "status": "status",
+        "asset id": "asset_id",
+        "asset_id": "asset_id",
+        "id": "asset_id"
+    }
+    field = key_map.get(sort_by.lower().strip(), "")
+    if not field:
+        return assets
+    
+    reverse = sort_order.lower().strip() in ["desc", "descending"]
+    return sorted(assets, key=lambda x: str(x.get(field) or "").lower(), reverse=reverse)
+
+
+def filter_assets(
+    status: str = "",
+    category: str = "",
+    brand: str = "",
+    assigned_to: str = "",
+    unassigned: bool = False,
+    recent: bool = False,
+    sort_by: str = "",
+    sort_order: str = "asc"
+):
+    assets = AssetRepo.get_all()
+    filtered = []
+    for a in assets:
+        if status and (a.get("status") or "").lower() != status.lower():
+            continue
+        if category and category.lower() not in (a.get("category") or "").lower():
+            continue
+        if brand and brand.lower() not in (a.get("brand") or "").lower():
+            continue
+        if unassigned and (a.get("assigned_to") or "").strip():
+            continue
+        if assigned_to and assigned_to.lower() not in (a.get("assigned_to") or "").lower():
+            continue
+        filtered.append(a)
+
+    if recent:
+        filtered = sorted(filtered, key=lambda x: str(x.get("last_updated_at") or ""), reverse=True)[:5]
+    else:
+        filtered = _sort_asset_list(filtered, sort_by=sort_by, sort_order=sort_order)
+
+    return filtered
+

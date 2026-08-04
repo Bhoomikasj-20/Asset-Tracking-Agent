@@ -117,6 +117,60 @@ class AssetRepo:
 
         return stats
 
+    @staticmethod
+    def get_summary():
+        all_assets = AssetRepo.get_all()
+        summary = {
+            "total_assets": len(all_assets),
+            "available": 0,
+            "assigned": 0,
+            "repair": 0,
+            "returned": 0,
+            "categories": {}
+        }
+        for asset in all_assets:
+            status = (asset.get("status") or "").lower()
+            cat = asset.get("category") or "General"
+            summary["categories"][cat] = summary["categories"].get(cat, 0) + 1
+            if status == "available":
+                summary["available"] += 1
+            elif status in ["assigned", "active"]:
+                summary["assigned"] += 1
+            elif status in ["in repair", "under audit", "repair", "maintenance"]:
+                summary["repair"] += 1
+            elif status == "returned":
+                summary["returned"] += 1
+        return summary
+
+    @staticmethod
+    def get_analytics():
+        summary = AssetRepo.get_summary()
+        all_assets = AssetRepo.get_all()
+        total = summary["total_assets"] or 1
+        assigned_by_cat = {}
+        for asset in all_assets:
+            status = (asset.get("status") or "").lower()
+            cat = asset.get("category") or "General"
+            if status in ["assigned", "active"]:
+                assigned_by_cat[cat] = assigned_by_cat.get(cat, 0) + 1
+
+        most_assigned_category = max(assigned_by_cat.items(), key=lambda x: x[1])[0] if assigned_by_cat else "None"
+        repair_pct = round((summary["repair"] / total) * 100, 1) if summary["total_assets"] > 0 else 0.0
+        assigned_pct = round((summary["assigned"] / total) * 100, 1) if summary["total_assets"] > 0 else 0.0
+
+        return {
+            "total_assets": summary["total_assets"],
+            "available": summary["available"],
+            "assigned": summary["assigned"],
+            "repair": summary["repair"],
+            "returned": summary["returned"],
+            "categories": summary["categories"],
+            "repair_percentage": f"{repair_pct}%",
+            "assignment_percentage": f"{assigned_pct}%",
+            "most_assigned_category": most_assigned_category,
+            "category_distribution": summary["categories"]
+        }
+
 
 class AuditLogRepo:
 

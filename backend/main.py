@@ -22,11 +22,11 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # Validate API key
-api_key = os.environ.get("GOOGLE_API_KEY", "")
+api_key = os.environ.get("GROQ_API_KEY", "")
 
 from core.sqlite_db import SQLiteDB
 from services import assets_service
-from services.gemini_service import gemini_service
+from services.groq_service import groq_service
 from routers import assets
 
 app = FastAPI(title="AssetsTracking Agent API")
@@ -135,7 +135,7 @@ async def run_sse(req: ChatRequest):
     
     async def event_generator():
         try:
-            async for chunk in gemini_service.generate_response_sse(session):
+            async for chunk in groq_service.generate_response_sse(session):
                 yield chunk
                 
                 # Parse chunk to collect for history
@@ -198,9 +198,22 @@ if os.path.isdir(frontend_dist):
 def health_check():
     return {
         "status": "healthy",
-        "api_key_configured": bool(api_key and api_key != "your_google_api_key_here"),
+        "api_key_configured": bool(api_key and api_key != "your_groq_api_key_here"),
         "version": "2.3.0"
     }
+
+if os.path.isdir(frontend_dist):
+    from fastapi.responses import FileResponse
+    @app.get("/")
+    async def serve_root():
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        file_path = os.path.join(frontend_dist, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
 
 def is_port_in_use(port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

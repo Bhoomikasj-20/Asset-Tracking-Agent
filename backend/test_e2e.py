@@ -140,7 +140,7 @@ print("\n[STEP 1] Verifying Service Health...")
 code, health = http_get(f"{BASE_URL}/health")
 assert code == 200, f"Expected 200 health check, got {code}"
 assert health.get("status") == "healthy", "Server not healthy"
-assert health.get("api_key_configured") is True, "Google API Key is not configured"
+assert health.get("api_key_configured") is True, "Groq API Key is not configured"
 print("  ✅ Backend is RUNNING and HEALTHY.")
 
 # --- STEP 2: Record Initial Dashboard Stats ---

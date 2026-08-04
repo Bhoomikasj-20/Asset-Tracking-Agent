@@ -3,18 +3,18 @@
 ### AI-Powered Conversational Corporate Asset Management System
 
 ![Enterprise](https://img.shields.io/badge/Enterprise-Ready-blue)
-![AI](https://img.shields.io/badge/AI-Gemini%202.0-purple)
+![AI](https://img.shields.io/badge/AI-Groq%20Llama%203.3-purple)
 ![Status](https://img.shields.io/badge/Status-Production-green)
 
 ---
 
 ## 📘 Overview
 
-**AssetsTracking Agent** is a modern **Agentic AI platform** for corporate asset management. It combines an intelligent conversational AI agent powered by Google Gemini with a comprehensive enterprise dashboard for tracking, auditing, and managing corporate hardware assets.
+**AssetsTracking Agent** is a modern **Agentic AI platform** for corporate asset management. It combines an intelligent conversational AI agent powered by Groq (`llama-3.3-70b-versatile`) with a comprehensive enterprise dashboard for tracking, auditing, and managing corporate hardware assets.
 
 ### Key Features
 
-- 🤖 **AI-Powered Chat Agent** — Natural language asset management with tool-calling capabilities
+- 🤖 **AI-Powered Chat Agent** — Natural language asset management with tool-calling capabilities using Groq
 - 📊 **Enterprise Dashboard** — Real-time analytics with animated statistics and status tracking
 - 📦 **Full Asset Lifecycle** — CRUD operations + Assign → Return → Audit → Clear workflow
 - 🔍 **Smart Search & Filter** — Search by name, type, brand, employee, category, or status
@@ -30,7 +30,7 @@
 
 - **Python 3.10+** with pip
 - **Node.js 18+** with npm
-- **Google AI Studio API Key** — Get one at [aistudio.google.com](https://aistudio.google.com/)
+- **Groq API Key** — Get one at [console.groq.com](https://console.groq.com/)
 
 ### 1. Clone & Setup Backend
 
@@ -45,8 +45,8 @@ pip install -r requirements.txt
 # Copy the example env file
 cp .env.example .env
 
-# Edit .env and add your Google AI Studio API key
-# GOOGLE_API_KEY=your_actual_key_here
+# Edit .env and add your Groq API key
+# GROQ_API_KEY=your_actual_key_here
 ```
 
 ### 3. Start Backend Server
@@ -134,8 +134,8 @@ Asset-Tracking-Agent/
 | Layer    | Technology                                          |
 |----------|-----------------------------------------------------|
 | Frontend | React 19, TypeScript, Vite, Tailwind CSS, Framer Motion |
-| Backend  | Python, FastAPI, Google ADK, SQLite                 |
-| AI       | Google Gemini 2.0 Flash                             |
+| Backend  | Python, FastAPI, Groq SDK, SQLite                   |
+| AI       | Groq (llama-3.3-70b-versatile)                      |
 | Icons    | Lucide React                                        |
 
 ---
@@ -172,6 +172,35 @@ The AI agent understands natural language. Example commands:
 - `"Generate audit summary"` — Provides dashboard insights
 - `"Search for Dell laptops"` — Smart search
 - `"Clear employee assets"` — Processes clearance workflow
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](<Screenshot 2026-06-07 203245.png>)
+![alt text](<Screenshot 2026-06-07 203421.png>)
+---
+
+## 🌐 Deployment Instructions
+
+### Backend (Render + Docker)
+
+1. **Create a New Web Service** on [Render](https://render.com) and connect your GitHub repository.
+2. **Environment Variables**:
+   - `GROQ_API_KEY`: Your Groq API Key (e.g., `gsk_...`)
+   - `PORT`: Automatically managed by Render (defaults to `10000`).
+3. **Build & Deploy Configuration**:
+   - **Runtime**: Docker
+   - **Dockerfile Path**: `backend/Dockerfile`
+   - **Docker Context**: `backend`
+4. The service will automatically build and launch FastAPI using Uvicorn on the dynamically assigned port.
+
+### Frontend (Vercel)
+
+1. **Create a New Project** on [Vercel](https://vercel.com) and import the repository.
+2. **Framework Preset**: Vite
+3. **Root Directory**: Select `frontend`
+4. **Environment Variables**:
+   - `VITE_API_URL`: Set to your deployed Render backend URL (e.g., `https://your-render-service.onrender.com`). Do NOT include a trailing slash.
+5. **SPA Routing**: Client-side navigation is automatically handled by the included `vercel.json` rewrite rules (`/(.*)` -> `/index.html`).
 
 ---
 

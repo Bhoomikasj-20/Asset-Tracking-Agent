@@ -147,7 +147,8 @@ export default function ChatInterface({ addToast }: Props) {
     let gotResponse = false;
 
     try {
-      const response = await fetch('/run_sse', {
+      const apiBase = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiBase}/run_sse`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
